@@ -1,25 +1,19 @@
 class Engine
-end
-
-class Scene
-  def initialize(params = {})
-    @map = params 
+  def initialize(start_scene)
+    @start_scene = start_scene
   end
 
-  def play_scene
+  def play
+    current_scene = @@MAP.fetch(@start_scene)
   end
 
   def get_next_scene
     # puts "You have made it to the next level!" unless Map.current_scene == "Central Corridor"
   end
+end
 
-  def current_scene scene
-    @map.fetch(scene)
-  end
-
-  def start_first_scene
-    @scene = current_scene(1)
-    @scene.gothon_fight
+class Scene
+  def enter
   end
 end
 
@@ -27,7 +21,7 @@ class Death < Scene
 end
 
 class CentralCorridor < Scene
-  def gothon_fight
+  def enter
     puts "A Gothon charges towards you!"
     puts "Whatever shall you do??"
     response = gets.chomp
@@ -54,7 +48,12 @@ class Map
   def exit_scene
   end
 
+  @@MAP = {
+    'Central Corridor': CentralCorridor.new,
+    'Death': Death.new
+  }
 end
-# new_map = Map.new
-# play_game = Engine.new(new_map)
-# play_game.start_first_scene
+new_map = Map.new
+play_game = Engine.new('Central Corridor')
+
+play_game.play
