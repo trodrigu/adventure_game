@@ -1,59 +1,69 @@
-class Engine
-  def initialize(start_scene)
-    @start_scene = start_scene
-  end
-
-  def play
-    current_scene = @@MAP.fetch(@start_scene)
-  end
-
-  def get_next_scene
-    # puts "You have made it to the next level!" unless Map.current_scene == "Central Corridor"
-  end
-end
-
 class Scene
   def enter
   end
 end
 
-class Death < Scene
-end
-
-class CentralCorridor < Scene
+class Lose < Scene
   def enter
-    puts "A Gothon charges towards you!"
-    puts "Whatever shall you do??"
-    response = gets.chomp
-    if response == 'run'
-      puts "You died"
-    end
   end
 end
 
-class LaserWeaponArmory < Scene
+class LevelOne < Scene
+  def enter
+  end
 end
 
-class TheBridge < Scene
+class LevelTwo < Scene
+  def enter
+  end
 end
 
-class EscapePod < Scene
+class LevelThree < Scene
+  def enter
+  end
+end
+
+class LevelFour < Scene
+  def enter
+  end
 end
 
 class Map
+  def initialize(start_scene)
+    @start_scene = start_scene
+  end
 
-  def enter_scene
+  def enter_scene scene
+    @@MAP.fetch(scene)
   end
 
   def exit_scene
   end
 
+  def start_of_map
+    @@MAP.fetch(@start_scene)
+  end
+
   @@MAP = {
-    'Central Corridor': CentralCorridor.new,
-    'Death': Death.new
+    'Level One' => LevelOne.new,
+    'Lose' => Lose.new
   }
 end
-new_map = Map.new
-play_game = Engine.new('Central Corridor')
 
-play_game.play
+class Engine
+  def initialize(map)
+    @map = map 
+  end
+
+  def play
+    @map.start_of_map
+  end
+
+  def get_next_scene scene
+    @map.enter_scene
+  end
+end
+
+new_map = Map.new('Level One')
+game = Engine.new(new_map)
+game.play
