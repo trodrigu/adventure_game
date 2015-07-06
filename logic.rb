@@ -1,3 +1,9 @@
+class GamePrinter
+  def self.print_out words
+    puts words.join(' ')
+  end
+end
+
 class Scene
   def enter
   end
@@ -9,10 +15,17 @@ class Lose < Scene
 end
 
 class LevelOne < Scene
+
+  def intro
+    GamePrinter.print_out %w[
+    "Welcome to Level One"
+    "Each level will test you on increasingly harder concepts of Ruby."
+    "What is the method that rhymes with fit used to separate a string?"
+    ]
+  end
+
   def enter
-    puts "Welcome to Level One"
-    puts "Each level will test you on increasingly harder concepts of Ruby."
-    puts "What is the method that rhymes with fit used to separate a string?"
+    intro
     response = gets.chomp.downcase
     if response == "split"
       puts "Outstanding!"
@@ -40,30 +53,38 @@ class LevelFour < Scene
 end
 
 class Map
-  def initialize(start_scene)
-    @start_scene = start_scene
+  def initialize(scene)
+    @scene = scene
   end
 
+  attr_accessor :scene
+
   def enter_scene scene
- 
-    current_scene = @@MAP.fetch(scene)
+    current_scene = Map.map.fetch(scene)
     current_scene.enter
   end
 
   def exit_scene
-    @start_scene += 1
+    @scene += 1
   end
 
  def start_of_map
-    current_scene = @@MAP.fetch(@start_scene)
+    current_scene = Map.map.fetch(@scene)
     current_scene.enter
   end
 
-  @@MAP = {
-    1 => LevelOne.new,
-    2 => LevelTwo.new,
-    3 => Lose.new
-  }
+  def self.map
+    {
+      1 => LevelOne.new,
+      2 => LevelTwo.new,
+      3 => Lose.new
+    }
+  end
+
+  def get_next_scene 
+    next_scene = exit_scene 
+    enter_scene next_scene
+  end
 end
 
 class Engine
@@ -71,13 +92,11 @@ class Engine
     @map = map 
   end
 
+  attr_accessor :map
+
   def play
     @map.start_of_map
-    get_next_scene
+    @map.get_next_scene
   end
 
-  def get_next_scene 
-    next_scene = @map.exit_scene 
-    @map.enter_scene next_scene
-  end
 end
