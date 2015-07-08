@@ -10,6 +10,10 @@ class LevelTwo < Scene
   def enter
     intro
   end
+  def grab_user_file
+  end
+  def compare_to_soln
+  end
 end
 
 Engine.register_it LevelTwo.new
