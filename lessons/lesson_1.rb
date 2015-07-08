@@ -2,9 +2,9 @@ class LevelOne < Scene
 
   def intro
     GamePrinter.print_out %w[
-    "Welcome to Level One"
-    "Each level will test you on increasingly harder concepts of Ruby."
-    "What is the method that rhymes with fit used to separate a string?"
+    Welcome to Level One
+    Each level will test you on increasingly harder concepts of Ruby.
+    What is the method that rhymes with fit used to separate a string?
     ]
   end
 
@@ -15,7 +15,7 @@ class LevelOne < Scene
       puts "Outstanding!"
     else
       puts "Not quite."
-      @lose_token = true
+      Map.set_lose_token = true
     end
   end
 end

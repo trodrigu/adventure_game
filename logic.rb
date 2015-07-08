@@ -29,8 +29,18 @@ class Map
     current_scene.enter
   end
 
+  @@LOSE_TOKEN = false
+
+  def lose?
+    @@LOSE_TOKEN == true
+  end
+
+  def self.set_lose_token=(new_status)
+    @@LOSE_TOKEN = new_status
+  end
+
   def get_next_scene 
-    if @lose_token == true
+    if lose?
       current_scene = Engine::LESSONS.fetch(4)
       current_scene.enter
     else
@@ -73,7 +83,7 @@ class Engine
   def play
     if @map.scene < 1
       @map.start_of_map
-      @map.get_next_scene
+      @map.get_next_scene 
     else
       @map.get_next_scene
     end
@@ -89,6 +99,7 @@ end
 class GamePrinter
   def self.print_out words
     puts words.join(' ')
+    puts
   end
 end
 

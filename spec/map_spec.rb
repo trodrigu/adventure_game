@@ -24,5 +24,11 @@ RSpec.describe Map, "#map" do
         expect( Engine::LESSONS.length ).to eq 5
       end
     end
+
+    context "lose level" do
+      it "can get the level" do
+        expect( new_map.get_next_scene ).to be_an_instance_of(Lose)
+      end
+    end
   end
 end

@@ -6,7 +6,7 @@ class Game
     new_map = Map.new(0)
     engine = Engine.new(new_map)
     loop do
-      new_map.scene < Engine::LESSONS.length - 1 ? engine.play : abort("Thats all folks")
+      new_map.scene < Engine::LESSONS.length - 2 ? engine.play : abort("Thats all folks")
     end
   end
 end
