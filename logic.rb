@@ -31,7 +31,7 @@ class Map
 
   def get_next_scene 
     if @lose_token == true
-      current_scene = @LESSONS.fetch(0)
+      current_scene = Engine::LESSONS.fetch(4)
       current_scene.enter
     else
       next_scene = exit_scene 
@@ -62,13 +62,12 @@ class Engine
   end
 
   def self.level_to_key level
-    l = /(One|Two|Three|Four)/.match(level.inspect)
+    l = /(One|Two|Three|Four|Lose)/.match(level.inspect)
     l[0]
-    binding.pry
   end
 
   def self.num_word_to_string w
-    ['One', 'Two', 'Three', 'Four'].rindex { |x| x == "#{w}" }
+    ['One', 'Two', 'Three', 'Four', 'Lose'].rindex { |x| x == "#{w}" }
   end
 
   def play

@@ -3,7 +3,7 @@ class Lose < Scene
     GamePrinter.print_out %w[
         "You lost man"
       ]
-    end
+  end
   def enter
     intro
   end
