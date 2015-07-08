@@ -11,7 +11,7 @@ RSpec.describe Map, "#map" do
       end
 
       it "can enter the first level" do
-        expect(Map.map.fetch(1)).to be_an_instance_of(LevelOne)
+        expect(Engine::LESSONS.fetch(1)).to be_an_instance_of(LevelTwo)
       end
 
       it "can exit the scene and increment key" do
@@ -19,9 +19,9 @@ RSpec.describe Map, "#map" do
       end
     end
 
-    context "map stores levels" do
+    context "stores levels" do
       it "has a number of levels" do
-        expect( Map.map.length ).to eq 3
+        expect( Engine::LESSONS.length ).to eq 5
       end
     end
   end

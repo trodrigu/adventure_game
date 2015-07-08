@@ -14,7 +14,6 @@ class Map
 
 
   def enter_scene scene
-    #current_scene = Map.map.fetch(scene)
     current_scene = Engine::LESSONS.fetch(scene)
     current_scene.enter
   end
@@ -26,14 +25,12 @@ class Map
   
 
   def start_of_map
-    #current_scene = Map.map.fetch(@scene)
     current_scene = Engine::LESSONS.fetch(@scene)
     current_scene.enter
   end
 
   def get_next_scene 
     if @lose_token == true
-      #current_scene = Map.map.fetch(0)      
       current_scene = @LESSONS.fetch(0)
       current_scene.enter
     else
@@ -58,8 +55,20 @@ class Engine
   end
 
   def self.register_it level
-    LESSONS[@i] = level
+    l = level_to_key level
+    i = num_word_to_string l
+    LESSONS[i] = level
     level_increment
+  end
+
+  def self.level_to_key level
+    l = /(One|Two|Three|Four)/.match(level.inspect)
+    l[0]
+    binding.pry
+  end
+
+  def self.num_word_to_string w
+    ['One', 'Two', 'Three', 'Four'].rindex { |x| x == "#{w}" }
   end
 
   def play
