@@ -1,53 +1,6 @@
-class GamePrinter
-  def self.print_out words
-    puts words.join(' ')
-  end
-end
+require 'pry'
 
 class Scene
-  def enter
-  end
-end
-
-class Lose < Scene
-  def enter
-  end
-end
-
-class LevelOne < Scene
-
-  def intro
-    GamePrinter.print_out %w[
-    "Welcome to Level One"
-    "Each level will test you on increasingly harder concepts of Ruby."
-    "What is the method that rhymes with fit used to separate a string?"
-    ]
-  end
-
-  def enter
-    intro
-    response = gets.chomp.downcase
-    if response == "split"
-      puts "Outstanding!"
-    else
-      puts "Not quite."
-    end
-  end
-end
-
-class LevelTwo < Scene
-  def enter
-    puts "Welcome to Level Two"
-    puts "This level will require you to write a bit of Ruby code"
-  end
-end
-
-class LevelThree < Scene
-  def enter
-  end
-end
-
-class LevelFour < Scene
   def enter
   end
 end
@@ -59,8 +12,10 @@ class Map
 
   attr_accessor :scene
 
+
   def enter_scene scene
-    current_scene = Map.map.fetch(scene)
+    #current_scene = Map.map.fetch(scene)
+    current_scene = Engine::LESSONS.fetch(scene)
     current_scene.enter
   end
 
@@ -68,23 +23,25 @@ class Map
     @scene += 1
   end
 
- def start_of_map
-    current_scene = Map.map.fetch(@scene)
+  
+
+  def start_of_map
+    #current_scene = Map.map.fetch(@scene)
+    current_scene = Engine::LESSONS.fetch(@scene)
     current_scene.enter
   end
 
-  def self.map
-    {
-      1 => LevelOne.new,
-      2 => LevelTwo.new,
-      3 => Lose.new
-    }
+  def get_next_scene 
+    if @lose_token == true
+      #current_scene = Map.map.fetch(0)      
+      current_scene = @LESSONS.fetch(0)
+      current_scene.enter
+    else
+      next_scene = exit_scene 
+      enter_scene next_scene
+    end
   end
 
-  def get_next_scene 
-    next_scene = exit_scene 
-    enter_scene next_scene
-  end
 end
 
 class Engine
@@ -94,9 +51,37 @@ class Engine
 
   attr_accessor :map
 
+  @i= 0
+  LESSONS = Hash.new
+  def self.level_increment
+    @i += 1
+  end
+
+  def self.register_it level
+    LESSONS[@i] = level
+    level_increment
+  end
+
   def play
-    @map.start_of_map
-    @map.get_next_scene
+    if @map.scene < 1
+      @map.start_of_map
+      @map.get_next_scene
+    else
+      @map.get_next_scene
+    end
   end
 
 end
+
+lessons = File.join("lessons", "*.rb")
+Dir[File.expand_path(lessons)].each do |file|
+  require file
+end
+
+class GamePrinter
+  def self.print_out words
+    puts words.join(' ')
+  end
+end
+
+
