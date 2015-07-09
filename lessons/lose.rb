@@ -1,6 +1,6 @@
 class Lose < Scene
   def enter
-    abort("Outta here")
+    abort("You have lost.  Please try again. :)")
   end
 end
 
