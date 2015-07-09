@@ -22,7 +22,13 @@ class LevelThree < Scene
   end
 
   def enter
-    [intro, choices, code].each { |x| GamePrinter.print_out x }
+    puts
+    puts Paint[GamePrinter.print_out(intro), :white, :bright]
+    puts
+    puts Paint[GamePrinter.print_out(choices), :red, :bright]
+    puts
+    puts Paint[GamePrinter.print_out(code), :blue, :bright]
+    puts
     response = gets.chomp.downcase
     case response
     when "right"

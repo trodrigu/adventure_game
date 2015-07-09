@@ -1,4 +1,5 @@
 require 'pry'
+require 'paint'
 
 class Scene
   def enter
@@ -98,8 +99,7 @@ end
 
 class GamePrinter
   def self.print_out words
-    puts words.join(' ')
-    puts
+    words.join(' ')
   end
 end
 

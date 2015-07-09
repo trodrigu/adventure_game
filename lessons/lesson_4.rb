@@ -18,7 +18,7 @@ class LevelFour < Scene
 
   def choices
     %w[
-      You can see how object oriented really is and understand how everything (even operators) are objects.
+      You can see how object oriented Ruby really is and understand how everything (even operators) are objects.
       The choices you can think of are reduce, inject, and slap.
     ]
   end
@@ -33,7 +33,13 @@ class LevelFour < Scene
   end
 
   def enter
-    [intro, choices, code].each { |x| GamePrinter.print_out x }
+    puts
+    puts Paint[GamePrinter.print_out(intro), :white, :bright]
+    puts
+    puts Paint[GamePrinter.print_out(choices), :red, :bright]
+    puts
+    puts Paint[GamePrinter.print_out(code), :blue, :bright]
+    puts
     response = gets.chomp.downcase
     case response
     when "reduce"
